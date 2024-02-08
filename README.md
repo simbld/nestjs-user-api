@@ -5,23 +5,6 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
@@ -58,16 +41,103 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Quête n°3 - NestJS
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+A progressive Node.js framework for building efficient, reliable and scalable server-side applications.
 
-## Stay in touch
+## Initialiser le Projet NestJS
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# nestjs-user-api
+$ npm init -y
+$ npm i -g @nestjs/cli
+$ nest new .
+```
 
-## License
+## Installer TypeORM et MySQL
 
-Nest is [MIT licensed](LICENSE).
+- Crée un fichier .env à la racine du projet.
+- Ajoute les variables pour la configuration de la base de données.
+- Crée le fichier src/config/database.config.ts pour la configuration TypeORM.
+
+## Modifier le AppModule
+
+- Ajoute la configuration de TypeORM dans app.module.ts
+
+## Ajouter Scripts TypeORM dans package.json
+
+- Ajoute les scripts pour gérer les migrations.
+
+```bash
+# package.json
+$ npm run migration:create (pour créer une nouvelle migration vide)
+$ npm run migration:generate (pour génerer une nouvelle migration)
+$ npm run migration:up (pour exécuter les migrations non exécutées)
+$ npm run migration:down (pour rolllback la dernière migration)
+```
+
+## Générer le Module, Service, et Controller
+
+```bash
+# nestjs-user-api
+$ nest g module users
+$ nest g service users
+$ nest g controller users
+```
+
+## Créer l'Entité User
+
+```bash
+# nestjs-user-api
+- nest g class users/user.entity
+```
+
+```bash
+# user.entity.ts
+- id: auto-généré
+- email: string (50 caractères)
+- password: string (50 caractères)
+- firstname: string (80 caractères)
+- lastname: string (80 caractères)
+```
+
+## Configurer le Module Users
+
+- Ajoute l'entité User à users.module.ts.
+
+`imports: [TypeOrmModule.forFeature([User])]`
+
+## Gérer les Migrations
+
+- Crée le fichier src/config/migration.config.ts.
+- Génère et applique la migration pour la création de la table utilisateur.
+
+Tu dois d'abord lancer ton serveur car les migrations seront générées en TS, mais devront être transpilées en JS.
+
+```bash
+$ npm run start:dev
+```
+
+Pour créer la migration correspondante à la création de la table user :
+
+```bash
+$ npm run migration:generate src/migrations/CreateUserTable
+```
+
+## Développer le UsersService
+
+- Implémente les méthodes nécessaires dans users.service.ts
+
+`imports: [TypeOrmModule.forFeature([User])]`
+
+## Développer le UsersController
+
+- Ajoute les méthodes CRUD dans users.controller.ts.
+
+`imports: [TypeOrmModule.forFeature([User])]`
+
+## Tester l'API avec Postman ou curl
+
+- Fais des tests pour t'assurer que tout fonctionne correctement.
+
+`imports: [TypeOrmModule.forFeature([User])]`
