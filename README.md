@@ -138,6 +138,8 @@ $ npm run migration:up
 ## Développer le UsersController
 
 - Ajoute les méthodes CRUD dans users.controller.ts.
+- Le décorateur `@Controller('users')` sera chargé de gérer la route `http://localhost:3000/users`
+- N'oublie pas d'injecter le UsersService dans ton constructeur. Tu vas en avoir besoin pour interagir avec ta base de données.
 
 ## Tester l'API avec Postman ou curl
 
