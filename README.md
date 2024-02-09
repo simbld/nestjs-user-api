@@ -124,20 +124,23 @@ Pour créer la migration correspondante à la création de la table user :
 $ npm run migration:generate src/migrations/CreateUserTable
 ```
 
+Après avoir généré une migration, on l'applique :
+
+```bash
+$ npm run migration:up
+
+```
+
 ## Développer le UsersService
 
 - Implémente les méthodes nécessaires dans users.service.ts
 
-`imports: [TypeOrmModule.forFeature([User])]`
-
 ## Développer le UsersController
 
 - Ajoute les méthodes CRUD dans users.controller.ts.
-
-`imports: [TypeOrmModule.forFeature([User])]`
+- Le décorateur `@Controller('users')` sera chargé de gérer la route `http://localhost:3000/users`
+- N'oublie pas d'injecter le UsersService dans ton constructeur. Tu vas en avoir besoin pour interagir avec ta base de données.
 
 ## Tester l'API avec Postman ou curl
 
 - Fais des tests pour t'assurer que tout fonctionne correctement.
-
-`imports: [TypeOrmModule.forFeature([User])]`
