@@ -5,7 +5,6 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "type": "module",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -19,11 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:create": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:create",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/config/migration.config.ts",
-    "migration:generate": "npm run typeorm -- migration:generate --dataSource src/config/migration.config.ts -n NomDeLaMigration",
-    "migration:run": "npm run typeorm -- migration:run --dataSource src/config/migration.config.ts",
-    "migration:revert": "npm run typeorm -- migration:revert --dataSource src/config/migration.config.ts",
+    "migration:create": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:create",
+    "migration:generate": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:generate -d src/config/migration.config.ts",
     "migration:up": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run -d src/config/migration.config.ts",
     "migration:down": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:revert -d src/config/migration.config.ts"
   },
