@@ -15,15 +15,10 @@ export class UsersService {
 
   async getUser(id: number): Promise<User[]> {
     return await this.usersRepository.find({
+      // Properties to return. We don't want the password property.
       select: ["firstname", "lastname", "email"],
       where: [{ id: id }]
     });
-  }
-
-  async createUser(userData: User): Promise<User> {
-    const newUser = this.usersRepository.create(userData); // Crée un nouvel utilisateur avec les données fournies
-    await this.usersRepository.save(newUser); // Enregistre le nouvel utilisateur dans la base de données
-    return newUser; // Retourne l'utilisateur créé
   }
 
   saveUser(user: User): Promise<User> {

@@ -1,14 +1,13 @@
-import { TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { DataSourceOptions } from "typeorm";
+import "dotenv/config";
 
-export const databaseConfig: TypeOrmModuleOptions = {
-  type: "mysql",
+export const databaseConfig: DataSourceOptions = {
+  type: "mariadb",
   host: process.env.DATABASE_HOST,
-  port: parseInt(process.env.DATABASE_PORT, 10),
+  port: parseInt(process.env.DATABASE_PORT || "3000"),
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_DB,
   entities: [__dirname + "/../**/*.entity{.ts,.js}"],
-  migrations: [__dirname + "/../migrations/*{.ts,.js}"],
-  // Assurez-vous que synchronize est défini sur false en production !
   synchronize: false
 };
