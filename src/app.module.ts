@@ -5,6 +5,8 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { databaseConfig } from "./config/database.config";
 import { AuthModule } from "./auth/auth.module";
+import { ArticlesService } from './articles/articles.service';
+import { ArticlesController } from './articles/articles.controller';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { AuthModule } from "./auth/auth.module";
     }),
     AuthModule
   ],
-  controllers: [AppController],
-  providers: [AppService]
+  controllers: [AppController, ArticlesController],
+  providers: [AppService, ArticlesService]
 })
 export class AppModule {}
