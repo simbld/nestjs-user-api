@@ -8,6 +8,8 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "target": "ES2021",
+    "lib": ["ESNext"],
+    "types": ["node"],
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "./dist",
