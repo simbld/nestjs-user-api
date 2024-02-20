@@ -9,7 +9,7 @@
     "allowJs": true,
     "target": "ES2021",
     "lib": ["ESNext"],
-    "types": ["node"],
+    "types": ["node", "reflect-metadata", "jest"],
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "./dist",
@@ -20,6 +20,8 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
+    "strict": true,
+    "esModuleInterop": true,
     "noFallthroughCasesInSwitch": false
   }
 }

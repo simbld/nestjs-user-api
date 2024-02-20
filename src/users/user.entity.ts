@@ -1,4 +1,4 @@
-import { Article } from "src/articles/article.entity";
+import { Article } from "../articles/article.entity";
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity()
@@ -30,4 +30,5 @@ export class User {
 
   @OneToMany(() => Article, (article) => article.author)
   articles: Article[];
+  name: string;
 }
