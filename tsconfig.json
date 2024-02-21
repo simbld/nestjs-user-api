@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
+    "target": "ES5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["node", "reflect-metadata", "jest"],
     "allowJs": true,
-    "target": "ES2021",
-    "lib": ["ESNext"],
-    "types": ["node"],
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "./dist",
@@ -20,6 +23,8 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
+    "strict": true,
+    "esModuleInterop": true,
     "noFallthroughCasesInSwitch": false
   }
 }
