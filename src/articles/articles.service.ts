@@ -32,7 +32,7 @@ export class ArticlesService {
   async deleteArticle(id: string) {
     const deleteResponse = await this.articleRepository.delete(id);
     if (deleteResponse.affected === 0) {
-      throw new Error("Article not found !");
+      throw new Error("Article not found 🤷");
     }
     return { message: "Article deleted successfully !" };
   }
