@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { AuthService } from "./auth.service";
-import { UsersService } from "../users/users.service"; // Ajuste le chemin selon ta structure
+import { UsersService } from "../users/users.service";
 import { JwtService } from "@nestjs/jwt";
 
 describe("AuthService", () => {
@@ -12,11 +12,11 @@ describe("AuthService", () => {
         AuthService,
         {
           provide: UsersService,
-          useValue: {} // Fournis ici un mock de UsersService
+          useValue: {} // Provide here a mock of UsersService
         },
         {
           provide: JwtService,
-          useValue: {} // Fournis ici un mock de JwtService
+          useValue: {} // Provide here a mock of JwtService
         }
       ]
     }).compile();
@@ -28,5 +28,5 @@ describe("AuthService", () => {
     expect(service).toBeDefined();
   });
 
-  // Ajoute ici d'autres tests spécifiques à AuthService
+  // Add other AuthService specific tests here
 });

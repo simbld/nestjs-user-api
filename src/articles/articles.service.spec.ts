@@ -12,7 +12,7 @@ describe("ArticlesService", () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ArticlesService,
-        // Fournit un mock pour le repository d'Article
+        // Provides a mock for the Article repository
         {
           provide: getRepositoryToken(Article),
           useFactory: repositoryMockFactory
@@ -28,16 +28,16 @@ describe("ArticlesService", () => {
     expect(service).toBeDefined();
   });
 
-  // Ajoute d'autres tests selon les méthodes de ton ArticlesService
+  // Add other tests according to the methods of your ArticlesService
 });
 
-// Factory pour créer un mock de repository
+// Factory to create a repository mock
 const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(() => ({
   findOne: jest.fn((entity) => entity)
-  // Ajoute d'autres méthodes nécessaires pour tes tests
+  // Add other methods needed for your tests
 }));
 
-// Type pour aider avec le typage du mock
+// Type to help with mock typing
 type MockType<T> = {
   [P in keyof T]?: jest.Mock<{}>;
 };

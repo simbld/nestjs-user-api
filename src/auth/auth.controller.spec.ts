@@ -12,7 +12,7 @@ describe("AuthController", () => {
         {
           provide: AuthService,
           useValue: {
-            // Ici tu peux mocker les méthodes de AuthService que ton controller utilise
+            // Here you can mock the AuthService methods that your controller uses
             validateUser: jest.fn(),
             login: jest.fn()
             // etc.
@@ -28,5 +28,5 @@ describe("AuthController", () => {
     expect(controller).toBeDefined();
   });
 
-  // Ici tu peux ajouter d'autres tests spécifiques à tes endpoints
+  // Here you can add other tests specific to your endpoints
 });
