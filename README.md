@@ -131,6 +131,15 @@ $ npm run migration:up
 
 ```
 
+(la commande qui m'a dépanné quand je n'arrivais plus a lancer mon serveur a cause d'une manip qui a supprimé mon dossier /dist)
+
+```bash
+
+ts-node -P tsconfig.json -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:run -d src/config/migration.config.ts
+
+
+```
+
 ### Développer le UsersService
 
 - Implémente les méthodes nécessaires dans users.service.ts
