@@ -13,12 +13,12 @@ export class UsersService {
     return await this.usersRepository.find();
   }
 
-  async getUser(id: number): Promise<User[]> {
-    return await this.usersRepository.find({
-      // Properties to return. We don't want the password property.
-      select: ["firstname", "lastname", "email"],
-      where: [{ id: id }]
-    });
+  async getUser(id: number): Promise<User | null> {
+    return await this.usersRepository
+      .createQueryBuilder("user")
+      .select(["user.firstname", "user.lastname", "user.email"])
+      .where("user.id = :id", { id })
+      .getOne();
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {

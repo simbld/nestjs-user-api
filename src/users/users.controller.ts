@@ -15,8 +15,8 @@ export class UsersController {
   constructor(private service: UsersService) {}
 
   @Get(":id")
-  get(@Param() params) {
-    return this.service.getUser(params.id);
+  get(@Param("id") id: string) {
+    return this.service.getUser(+id);
   }
 
   @Post()

@@ -1,5 +1,11 @@
 import { User } from "../users/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn
+} from "typeorm";
 
 @Entity()
 export class Article {
@@ -23,5 +29,6 @@ export class Article {
   status: "draft" | "published";
 
   @ManyToOne(() => User, (user) => user.articles)
+  @JoinColumn({ name: "authorId" })
   author: User;
 }

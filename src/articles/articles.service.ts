@@ -25,8 +25,12 @@ export class ArticlesService {
   }
 
   async updateArticle(id: string, articleData: any): Promise<Article> {
-    await this.articleRepository.update(id, articleData);
-    return this.articleRepository.findOneBy({ id: +id });
+    let article = await this.articleRepository.findOneBy({ id: +id });
+    if (!article) {
+      throw new Error("Article not found 🤷");
+    }
+    article = this.articleRepository.merge(article, articleData);
+    return this.articleRepository.save(article);
   }
 
   async deleteArticle(id: string) {
