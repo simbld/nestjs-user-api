@@ -33,11 +33,12 @@ export class ArticlesService {
     return this.articleRepository.save(article);
   }
 
-  async deleteArticle(id: string) {
+  async deleteArticle(id: string): Promise<void> {
     const deleteResponse = await this.articleRepository.delete(id);
-    if (deleteResponse.affected === 0) {
+    if (deleteResponse.affected !== 0) {
       throw new Error("Article not found 🤷");
+    } else {
+      message: "Article deleted successfully !";
     }
-    return { message: "Article deleted successfully !" };
   }
 }
