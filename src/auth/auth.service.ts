@@ -16,8 +16,8 @@ export class AuthService {
    * Validate the user in parameter
    */
 
-  async validate(email: string): Promise<any> {
-    return this.usersService.getUserByEmail(email);
+  async validate(email: string): Promise<User> {
+    return await this.usersService.getUserByEmail(email);
   }
 
   /**
@@ -28,16 +28,12 @@ export class AuthService {
    */
 
   public async login(user: User): Promise<any | { status: number }> {
-    console.log(`Tentative de login pour l'email : ${user.email}`);
-
     return this.validate(user.email).then((userData) => {
       // user not found
-      if (!userData) {
-        console.log(`Utilisateur non trouvé pour l'email : ${user.email}`);
+      if (!userData || userData.password != this.hash(user.password)) {
         return { status: 404 };
       }
-      console.log("Hash du mot de passe saisi:", this.hash(user.password));
-      console.log("Hash stocké en base de données:", userData.password);
+
       if (userData.password != this.hash(user.password)) {
         console.log(
           `Mot de passe incorrect pour l'utilisateur : ${user.email}`
@@ -47,7 +43,6 @@ export class AuthService {
       //user found, the access token will be composed by the email
       const payload = `${userData.email}`;
       const accessToken = this.jwtService.sign(payload);
-      console.log(`Login réussi pour l'utilisateur : ${user.email}`);
 
       return {
         expires_in: 3600,
