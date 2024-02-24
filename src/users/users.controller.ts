@@ -15,17 +15,23 @@ export class UsersController {
   constructor(private service: UsersService) {}
 
   @Get(":id")
-  get(@Param("id") id: string) {
+  getUserById(@Param("id") id: string) {
     return this.service.getUser(+id);
   }
 
+  @Get()
+  getAllUsers() {
+    return this.service.getUsers();
+  }
+
   @Post()
-  create(@Body() user: User) {
+  createUser(@Body() user: User) {
     return this.service.saveUser(user);
   }
 
-  @Put()
-  update(@Body() user: User) {
+  @Put(":id")
+  updateUser(@Param("id") id: string, @Body() user: User) {
+    user.id = +id;
     return this.service.saveUser(user);
   }
 
