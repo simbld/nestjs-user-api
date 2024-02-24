@@ -1,15 +1,16 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-
-import * as crypto from "crypto";
 import { UsersService } from "../users/users.service";
 import { User } from "../users/user/user.entity";
+import { UtilsService } from "../../shared/utils.service";
+import { HashPasswordService } from "../../shared/hash-password.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly hashPasswordService: HashPasswordService
   ) {}
 
   /**
@@ -27,39 +28,29 @@ export class AuthService {
    * @param user
    */
 
-  public async login(user: User): Promise<any | { status: number }> {
-    return this.validate(user.email).then((userData) => {
-      // user not found
-      if (!userData || userData.password != this.hash(user.password)) {
-        return { status: 404 };
-      }
+  async login(user: User): Promise<any | { status: number }> {
+    const userData = await this.validate(user.email);
+    // user not found
+    if (!userData) {
+      return { status: 404, message: "User not found" };
+    }
 
-      if (userData.password != this.hash(user.password)) {
-        console.log(
-          `Mot de passe incorrect pour l'utilisateur : ${user.email}`
-        );
-        return { status: 404 };
-      }
-      //user found, the access token will be composed by the email
-      const payload = `${userData.email}`;
-      const accessToken = this.jwtService.sign(payload);
+    // Check hashed password (crypto.createHmac dans Node.js est asynchrone par nature)
+    const hashedPassword = this.hashPasswordService.hash(user.password);
+    if (userData.password !== hashedPassword) {
+      return { status: 404, message: "Invalid password" };
+    }
+    // User found and password is valid, create the access token
+    const payload = { email: userData.email, sub: userData.id };
+    const accessToken = this.jwtService.sign(payload);
 
-      return {
-        expires_in: 3600,
-        access_token: accessToken
-      };
-    });
+    return {
+      expires_in: 3600,
+      access_token: accessToken
+    };
   }
-  public async register(user: User): Promise<any> {
-    user.password = this.hash(user.password);
+  async register(user: User): Promise<User> {
+    user.password = this.hashPasswordService.hash(user.password);
     return this.usersService.saveUser(user);
-  }
-
-  /**
-   * Hash the password in parameter.
-   */
-
-  private hash(password: string): string {
-    return crypto.createHmac("sha256", password).digest("hex");
   }
 }
