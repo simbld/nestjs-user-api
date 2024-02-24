@@ -1,43 +1,88 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { ArticlesService } from "./articles.service";
-import { getRepositoryToken } from "@nestjs/typeorm";
-import { Article } from "./article/article.entity";
-import { Repository } from "typeorm";
+import { UsersService } from "../users/users.service";
+import { JwtService } from "@nestjs/jwt";
+import { HashPasswordService } from "../../shared/hash-password.service";
+import { AuthService } from "../auth/auth.service";
+import { User } from "../users/user/user.entity";
 
-describe("ArticlesService", () => {
-  let service: ArticlesService;
-  let mockRepository: MockType<Repository<Article>>;
+describe("AuthService", () => {
+  let authService: AuthService;
+  let usersService: UsersService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        ArticlesService,
-        // Provides a mock for the Article repository
+        AuthService,
         {
-          provide: getRepositoryToken(Article),
-          useFactory: repositoryMockFactory
+          provide: UsersService,
+          useValue: {
+            getUserByEmail: jest.fn().mockImplementation((email) => {
+              if (email === "existinguser@example.com") {
+                return Promise.resolve({
+                  id: 1,
+                  email,
+                  password: "hashedPassword" // Suppose this is the hashed password
+                });
+              }
+              return null;
+            })
+          }
+        },
+        {
+          provide: JwtService,
+          useValue: {
+            sign: jest.fn().mockReturnValue("mockedJwtToken")
+          }
+        },
+        {
+          provide: HashPasswordService,
+          useValue: {
+            hash: jest.fn().mockReturnValue("hashedPassword") // Ensure this matches the mocked password above
+          }
         }
       ]
     }).compile();
 
-    service = module.get<ArticlesService>(ArticlesService);
-    mockRepository = module.get(getRepositoryToken(Article));
+    authService = module.get<AuthService>(AuthService);
+    usersService = module.get<UsersService>(UsersService);
   });
 
   it("should be defined", () => {
-    expect(service).toBeDefined();
+    expect(authService).toBeDefined();
   });
 
-  // Add other tests according to the methods of your ArticlesService
+  it("should return a token for valid login", async () => {
+    const user: User = {
+      email: "existinguser@example.com",
+      password: "correctPassword",
+      createdAt: new Date(),
+      firstname: "Firstname",
+      lastname: "Lastname",
+      id: 0,
+      status: "offline",
+      articles: [],
+      name: ""
+    };
+    const result = await authService.login(user);
+    expect(result).toEqual({
+      expires_in: 3600,
+      access_token: "mockedJwtToken"
+    });
+  });
+
+  it("should return status 404 for invalid login", async () => {
+    const user: User = {
+      email: "nonexisting@example.com",
+      password: "wrongPassword",
+      id: 0,
+      createdAt: undefined,
+      firstname: "",
+      lastname: "",
+      status: "offline",
+      articles: [],
+      name: ""
+    };
+    const result = await authService.login(user);
+    expect(result).toEqual({ status: 404, message: "User not found" });
+  });
 });
-
-// Factory to create a repository mock
-const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(() => ({
-  findOne: jest.fn((entity) => entity)
-  // Add other methods needed for your tests
-}));
-
-// Type to help with mock typing
-type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>;
-};

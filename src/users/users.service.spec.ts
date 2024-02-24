@@ -2,6 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { UsersService } from "./users.service";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { User } from "./user/user.entity";
+import { HashPasswordService } from "../../shared/hash-password.service";
 
 describe("UsersService", () => {
   let service: UsersService;
@@ -12,13 +13,9 @@ describe("UsersService", () => {
         UsersService,
         {
           provide: getRepositoryToken(User),
-          useValue: {
-            find: jest.fn(),
-            findOneBy: jest.fn(),
-            save: jest.fn(),
-            delete: jest.fn()
-          }
-        }
+          useValue: mockRepository
+        },
+        HashPasswordService
       ]
     }).compile();
 
@@ -31,3 +28,10 @@ describe("UsersService", () => {
 
   // Autres tests...
 });
+const mockRepository = {
+  // Simule tes méthodes ici, par exemple:
+  find: jest.fn(),
+  findOneBy: jest.fn(),
+  save: jest.fn(),
+  delete: jest.fn()
+};
