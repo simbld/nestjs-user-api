@@ -1,0 +1,65 @@
+### Créer un utilisateur
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "email": "john2.doe@example.com",
+    "password": "newpassword2",
+    "firstname": "Johny",
+    "lastname": "Doey"
+}
+
+### Obtenir tous les utilisateurs
+GET http://localhost:3000/users
+Content-Type: application/json
+
+### Obtenir un utilisateur par ID
+GET http://localhost:3000/users/5
+Content-Type: application/json
+
+### Mettre à jour un utilisateur
+PUT http://localhost:3000/users/5
+Content-Type: application/json
+
+{
+    "email": "nouveaujohn.doe@example.com",
+    "password": "newph5assword",
+    "firstname": "Nouveaujohn",
+    "lastname": "Doesh"
+}
+
+### Supprimer un utilisateur
+DELETE http://localhost:3000/users/3
+Content-Type: application/json
+
+### Créer un article
+# Inclure un token JWT valide dans le header Authorization pour les requêtes sécurisées, choisir "Bearer Token"
+POST http://localhost:3000/articles
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
+
+{
+    "title": "My First Article",
+    "content": "This is the content of my first article. He talks about NestJS and TypeORM.",
+    "authorId": 1
+}
+
+### Lister tous les articles (publique)
+GET http://localhost:3000/articles
+Content-Type: application/json
+
+### Mettre à jour un article
+PUT http://localhost:3000/articles/2
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
+
+{
+    "title": "My First Modified Article",
+    "content": "This is the content of my first edited article. It talks about NestJS and TypeORM."
+    "authorId": 2
+}
+
+### Supprimer un article
+DELETE http://localhost:3000/articles/3
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
