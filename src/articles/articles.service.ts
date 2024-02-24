@@ -2,12 +2,15 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Article } from "./article/article.entity";
 import { Repository } from "typeorm";
+import { UtilsService } from "../../shared/utils.service";
+import { error } from "console";
 
 @Injectable()
 export class ArticlesService {
   constructor(
     @InjectRepository(Article)
-    private articleRepository: Repository<Article>
+    private articleRepository: Repository<Article>,
+    private utilsService: UtilsService
   ) {}
 
   async findAll(): Promise<Article[]> {
@@ -35,10 +38,8 @@ export class ArticlesService {
 
   async deleteArticle(id: string): Promise<void> {
     const deleteResponse = await this.articleRepository.delete(id);
-    if (deleteResponse.affected !== 0) {
+    if (deleteResponse.affected === 0) {
       throw new Error("Article not found 🤷");
-    } else {
-      message: "Article deleted successfully !";
     }
   }
 }
