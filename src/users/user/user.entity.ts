@@ -1,5 +1,13 @@
 import { Article } from "../../articles/article/article.entity";
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  JoinColumn
+} from "typeorm";
+import { Category } from "../../categories/category/category.entity";
 
 @Entity()
 export class User {
@@ -31,4 +39,8 @@ export class User {
   @OneToMany(() => Article, (article) => article.author)
   articles: Article[];
   name: string;
+
+  @ManyToOne(() => Category, (category) => category.author)
+  @JoinColumn({ name: "categoryId" })
+  category: Category;
 }
