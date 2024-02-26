@@ -1,14 +1,12 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
+<p align="center"
+  
+![Capture d’écran du 2024-02-26 23-19-33](https://github.com/simbld/nestjs-user-api/assets/102648783/20917763-d597-42d4-be88-4a8c9824bf77)>
+</p>
+  [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 ## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ### Installation
 
 ```bash
