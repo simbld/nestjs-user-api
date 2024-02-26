@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Article } from "./article/article.entity";
 import { Repository } from "typeorm";
 import { UtilsService } from "../../shared/utils.service";
-import { error } from "console";
 
 @Injectable()
 export class ArticlesService {
