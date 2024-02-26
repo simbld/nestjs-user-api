@@ -63,3 +63,48 @@ Content-Type: application/json
 DELETE http://localhost:3000/articles/3
 Authorization: Bearer <your_jwt_token>
 Content-Type: application/json
+
+### Créer une catégorie
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+    "name": "Technologie"
+}
+
+### Obtenir toutes les catégories
+GET http://localhost:3000/categories
+Content-Type: application/json
+
+### Obtenir une catégorie par ID
+GET http://localhost:3000/categories/1
+Content-Type: application/json
+
+### Mettre à jour une catégorie
+PUT http://localhost:3000/categories/1
+Content-Type: application/json
+
+{
+    "name": "Science et Technologie"
+}
+
+### Supprimer une catégorie
+DELETE http://localhost:3000/categories/2
+Content-Type: application/json
+
+### Créer un article lié à une catégorie
+# Assurez-vous d'inclure un ID de catégorie valide dans "categoryId"
+POST http://localhost:3000/articles
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
+
+{
+    "title": "NestJS avec Docker",
+    "content": "Exploration de l'intégration de NestJS avec Docker.",
+    "authorId": 1,
+    "categoryId": 1
+}
+
+### Obtenir les articles d'une catégorie spécifique par le nom de la catégorie
+GET http://localhost:3000/categories/articles?name=Technologie
+Content-Type: application/json
