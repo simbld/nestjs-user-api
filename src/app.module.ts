@@ -7,7 +7,7 @@ import { databaseConfig } from "./config/database.config";
 import { AuthModule } from "./auth/auth.module";
 import { ArticlesModule } from "./articles/articles.module";
 import { UsersModule } from "./users/users.module";
-import { CategoriesModule } from './categories/categories.module';
+import { CategoriesModule } from "./categories/categories.module";
 
 @Module({
   imports: [

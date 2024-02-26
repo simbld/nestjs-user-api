@@ -15,9 +15,6 @@ module.exports = {
     node: true,
     jest: true
   },
-
-  preset: "ts-jest",
-  testEnvironment: "node",
   ignorePatterns: [".eslintrc.js"],
   rules: {
     "@typescript-eslint/interface-name-prefix": "off",
