@@ -9,6 +9,6 @@ export const databaseConfig: DataSourceOptions = {
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_DB,
   entities: [__dirname + "/../**/*.entity{.ts,.js}"],
-  synchronize: process.env.TYPEORM_SYNC === "true",
+  synchronize: process.env.TYPEORM_SYNC === "true" || false,
   logging: ["query", "error"]
 };
