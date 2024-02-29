@@ -20,10 +20,10 @@ export class ArticlesService {
     return this.articleRepository.findOneBy({ id: +id });
   }
 
-  async createArticle(articleData: any) {
+  async createArticle(articleData: any): Promise<Article> {
     const newArticle = this.articleRepository.create(articleData);
     await this.articleRepository.save(newArticle);
-    return newArticle;
+    return newArticle as any as Article;
   }
 
   async updateArticle(id: string, articleData: any): Promise<Article> {

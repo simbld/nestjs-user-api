@@ -23,10 +23,10 @@ export class CategoriesService {
     return this.categoryRepository.findOneBy({ id: +id });
   }
 
-  async createCategory(categoryData: any) {
+  async createCategory(categoryData: any): Promise<Category> {
     const newCategory = this.categoryRepository.create(categoryData);
     await this.categoryRepository.save(newCategory);
-    return newCategory;
+    return newCategory as any as Category;
   }
 
   async updateCategory(id: string, categoryData: any): Promise<Category> {
@@ -57,7 +57,10 @@ export class CategoriesService {
     if (!category) {
       throw new Error("Category not found 🤷");
     }
-    const newArticle = this.utilsService.createInstance(Article, articleData);
+    const newArticle: Article = this.utilsService.createInstance(
+      Article,
+      articleData
+    );
     newArticle.category = category;
     await this.articleRepository.save(newArticle);
     return newArticle;
