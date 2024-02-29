@@ -1,12 +1,15 @@
-import { TestingModule, Test } from "@nestjs/testing";
+import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { UtilsService } from "../../shared/utils.service";
-import { Article } from "./article/article.entity";
 import { ArticlesService } from "./articles.service";
+import { Article } from "./article/article.entity";
+import { UtilsService } from "../../shared/utils.service";
 
 export const mockArticleRepository = {
-  find: jest.fn(),
+  findAll: jest.fn(),
   findOne: jest.fn(),
+  create: jest.fn(),
+  delete: jest.fn(),
+  update: jest.fn(),
   save: jest.fn()
 };
 
@@ -22,15 +25,13 @@ describe("ArticlesService", () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ArticlesService,
-        Article,
-        UtilsService,
-        {
-          provide: UtilsService,
-          useValue: mockUtilsService
-        },
         {
           provide: getRepositoryToken(Article),
           useValue: mockArticleRepository
+        },
+        {
+          provide: UtilsService,
+          useValue: mockUtilsService
         }
       ]
     }).compile();
