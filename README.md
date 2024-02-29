@@ -86,6 +86,10 @@ $ nest g controller users
 ### Créer l'Entité User
 
 ```bash
+// on peut aussi faire : nest g resource users pour tout créer d'un coup ;
+```
+
+```bash
 # nestjs-user-api
 - nest g class users/user.entity
 ```
