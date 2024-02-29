@@ -26,7 +26,6 @@ export class ArticlesController {
     return this.articlesService.createArticle(articleData);
   }
 
-  @UseGuards(AuthGuard("jwt"))
   @Get(":id")
   findOne(@Param("id") id: string) {
     return this.articlesService.findOne(id);
