@@ -4,7 +4,12 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { Article } from "../articles/article/article.entity";
 import { Category } from "./category/category.entity";
 import { UtilsService } from "../../shared/utils.service";
-import { mockArticleRepository } from "../articles/article/article.entity.spec"; // Import the missing mockArticleRepository
+
+export const mockArticleRepository = {
+  find: jest.fn(),
+  findOne: jest.fn(),
+  save: jest.fn()
+};
 
 export const mockCategoryRepository = {
   find: jest.fn(),
@@ -27,7 +32,7 @@ describe("CategoriesService", () => {
           provide: getRepositoryToken(Article),
           useValue: mockArticleRepository
         },
-        UtilsService // Assure-toi que UtilsService est soit fourni directement, soit également simulé si nécessaire
+        UtilsService
       ]
     }).compile();
 
